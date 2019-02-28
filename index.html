@@ -1,0 +1,70 @@
+<html>
+	<head>
+		<style>
+		.todo {
+			font-size: 30px;
+			width: 300px;
+			min-width: 300px;
+			max-width: 300px;
+			height: 40px;
+			min-height: 40px;
+		}
+		.display {
+			font-size: 30px;
+		}
+		</style>
+	</head>
+	<body>
+		<textarea class="todo"/></textarea>
+		<div>
+			<canvas height="300" width="300"></canvas>
+		</div>
+		<div>
+			<span class="display"></span>
+		</div>
+		<input type="number" class="time"/>
+		<button class="set">Set</button>
+		<script>
+			const second = 1000;
+			const minite = 60 * second;
+
+			var $ = document.body.querySelector.bind(document.body)
+			var canvas = document.body.querySelector("canvas")
+			var ctx = canvas.getContext('2d');
+
+			var targetTime = Date.now()
+			$("button.set").addEventListener("click", () => {
+				targetTime = Date.now() +$("input.time").value * minite;
+			});
+
+			loop()
+			function loop() {
+				var left = targetTime - Date.now()
+				// if want large scale change total
+				draw(left>0?left:0, 60*minite)
+
+				$("span.display").innerText = Math.floor(left / minite) + "m" + Math.floor(left%minite / second) +"s"
+
+				requestAnimationFrame(loop)
+			}
+			function draw(left, total) {
+				ctx.clearRect(0, 0, 300, 300)
+
+				ctx.fillStyle = '#eeeeee';
+				ctx.beginPath();
+				ctx.arc(150, 150, 150, 0, Math.PI * 2);
+				ctx.fill();
+				ctx.closePath();
+
+
+				ctx.fillStyle = "red";
+				ctx.beginPath()
+				ctx.moveTo(150, 150)
+				ctx.arc(150, 150, 150, -Math.PI/2 , Math.PI * 2 * (total-left)/total -Math.PI/2, true);
+				ctx.lineTo(150, 150)
+				ctx.fill();
+				ctx.closePath();
+			}
+		</script>
+	</body>
+</html>
