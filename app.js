@@ -42,9 +42,13 @@ function loop() {
 
 		var left = targetTime - Date.now()
 		// if want large scale change total
-		draw(left>0?left:0, 60*minite)
-
-		$("span.display").innerText = Math.floor(left / minite) + "m" + Math.floor(left%minite / second) +"s"
+		if (left > 0) {
+			draw(left, 60*minite)
+			$("span.display").innerText = Math.floor(left / minite) + "m" + Math.floor(left%minite / second) +"s";
+		} else {
+			draw(0, 60*minite)
+			$("span.display").innerText = "Time up!";
+		}
 	}
 }
 function draw(left, total) {
