@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+  "name": "timer",
+  "version": "1.0.0",
+  "icons": {
+    "128": "icon_128.png"
+  },
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  },
+  "permissions": ["alwaysOnTopWindows"]
+}
